@@ -2,8 +2,8 @@
 " Setup particularly for use with the 'Earthsong' terminal theme and with no
 " GUI
 
-set nocompatible    " Removes backwards compatability features for vi
-filetype off
+set nocompatible    " required for vundle, Removes backwards compatability features for vi
+filetype off        " required for vundle
 set nomodeline
 " Avoid reaching up for the escape key
 map § <Esc>
@@ -19,7 +19,7 @@ hi Search ctermfg=none ctermbg=none cterm=reverse
 " keep the cursor centred when searching
 nmap n nzz
 " clears search results by pressing escape
-nnoremap <esc> :noh<return>
+"nnoremap <esc> :noh<return>
 
 " set ruler " AFAIK this is redundant when using ghettoline
 set backspace=indent,eol,start
@@ -49,6 +49,7 @@ hi MatchParen cterm=underline ctermbg=1 ctermfg=0 " Set bracket style
 
 " --- Ghetto Powerline ---
 " Statusline modifications, added Fugitive Status Line & Syntastic Error Message {{{2
+" TODO: fix this so it isn't quite so broken and colours things properly
 let g:last_mode = ''
 function! Mode()
   let l:mode = mode()
@@ -127,13 +128,14 @@ map <C-p> :w<CR>:! pandoc % -o %:r.pdf<CR><CR>
 imap <C-p> <ESC>:w<CR>:! pandoc % -o %:r.pdf<CR><CR>i
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set rtp+=~/.vim/bundle/Vundle.vim   " required
+call vundle#begin()                 " required
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
 " my plugins
-" NONE AT THE MOMENT
+Plugin 'xolox/vim-misc'             " required for easy tags
+Plugin 'xolox/vim-easytags'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -149,6 +151,11 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+" CTAGS / easy tags
+" easy tags configuration for beautiful syntax highlighting with ctags
+let g:easytags_file = '~/.vim/tags'     " Put the tags file out of my home directory
+let g:easytags_opts = ['--c++-kinds=+d']    " in short, enable everything for tagging c++ files
 
 " setup colour scheme
 syntax enable
