@@ -1,6 +1,7 @@
 " THOMAS HOPE's .vimrc, constructed with help from the internet
 
 set nocompatible            " Removes backwards compatability features for vi
+filetype plugin on          " Enable plugins (required for netrw)
 
 set tabstop=4               " Tabs look like 4 spaces
 set shiftwidth=4            " How to indent with '>' or autoindent
@@ -17,8 +18,16 @@ set foldlevelstart=99       " When you begin folding, everything starts open
 " Use space to toggle folding
 nnoremap <space> za
 
+set hlsearch                " Highlight search results (disable with noh)
+set incsearch               " Highlight searches as you type
+
 set hidden                  " Allows switching buffers without saving
 set showcmd                 " Show vim commands as you type them
+
+" press tab to insert '//' at every selected line
+xnoremap <Tab> :norm i//<CR>
+" press shift tab to delete the first to chars of every line
+xnoremap <S-Tab> :norm xx<CR>
 
 colorscheme spring-night    " ColorScheme from user rhysd on GitHub, place in ~/.vim/colors
 syntax on                   " Turn on syntax highlighting
