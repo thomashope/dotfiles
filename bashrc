@@ -2,6 +2,7 @@ alias ll="ls -lGp"
 alias la="ls -laGp"
 alias vim="mvim -v"
 alias love="/Applications/love.app/Contents/MacOS/love"
+alias path="echo $PATH | tr ':' '\n'"
 
 # Simple custom prompt
 PS1="\[\e[0;32m\]\W \u \$ \[\e[m\]"
