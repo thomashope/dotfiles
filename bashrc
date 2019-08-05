@@ -2,7 +2,7 @@ alias ll="ls -lGp"
 alias la="ls -laGp"
 alias vim="mvim -v"
 alias love="/Applications/love.app/Contents/MacOS/love"
-alias path="echo $PATH | tr ':' '\n'"
+alias path='tr ":" "\n" <<< "$PATH"' # use single quotes so the var gets expanded in when called rather than inline
 
 # Simple custom prompt
 PS1="\[\e[0;32m\]\W \u \$ \[\e[m\]"
