@@ -1,5 +1,5 @@
-alias ll="ls -lGp"
-alias la="ls -laGp"
+alias ll="ls -lGph"
+alias la="ls -laGph"
 alias vim="mvim -v"
 alias love="/Applications/love.app/Contents/MacOS/love"
 alias path='tr ":" "\n" <<< "$PATH"' # use single quotes so the var gets expanded in when called rather than inline
@@ -12,6 +12,6 @@ export PS1
 PATH=$PATH:~/scripts
 
 # Put secret work stuff in a seperate file
-source ./bashrc_work
+source ~/.dotfiles/bashrc_work
 
 export PATH
