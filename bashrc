@@ -1,5 +1,5 @@
-alias ll="ls -lGp"
-alias la="ls -laGp"
+alias ll="ls -lGph"
+alias la="ls -laGph"
 #alias vim="mvim -v"
 alias love="/Applications/love.app/Contents/MacOS/love"
 alias path='tr ":" "\n" <<< "$PATH"' # use single quotes so the var gets expanded when called rather than inline
