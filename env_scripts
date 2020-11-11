@@ -1,0 +1,7 @@
+# Things to be run on all invocations of the shell
+
+PATH=$PATH:~/scripts
+PATH=$PATH:/Applications/love.app/Contents/MacOS/love
+PATH="$PATH:$HOME/Library/Application Support/itch/apps/butler"
+
+export PATH

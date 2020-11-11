@@ -1,0 +1,13 @@
+# Things to be run for intercative shells
+
+alias ll="ls -lGp"
+alias la="ls -laGp"
+alias path='tr ":" "\n" <<< "$PATH"' # use single quotes to defer $PATH var expansion
+
+# Bash prompt
+#PS1="\[\e[0;32m\]\W \u \$ \[\e[m\]"
+#export PS1
+
+# Zsh prompt
+prompt='%F{green}%2~ %#%f '
+export prompt
