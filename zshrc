@@ -1,1 +1,1 @@
-source ~/.dotfiles/user_scripts
+source ~/.dotfiles/shell_user_scripts

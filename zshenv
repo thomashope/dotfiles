@@ -1,1 +1,1 @@
-source ~/.dotfiles/env_scripts
+source ~/.dotfiles/shell_env_scripts
