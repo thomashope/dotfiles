@@ -8,6 +8,7 @@
 
 [alias]
     s = status
+    ci = commit
 
 #
 # Setup Unity Merge Tool
