@@ -1,0 +1,30 @@
+#
+# Global git config
+#
+
+[include]
+	# for username / creds / etc
+	path = .gitconfig.local
+
+[alias]
+    s = status
+
+#
+# Setup Unity Merge Tool
+#
+
+# If you get a conflict in a Unity yaml file, type `git umerge` to use Unity's merge tool.
+
+# First, set your default merge tool to something else, i'm using Sublime Merge
+[merge]
+	tool = smerge
+# Don't create backup .orig files while merging
+[mergetool]
+	keepBackup = false
+# Setup a profile for UnityYAMLMerge
+[mergetool "unity"]
+    trustExitCode = false
+    cmd = '/Applications/Unity/Unity.app/Contents/Tools/UnityYAMLMerge' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED":
+# Add shortcut for UnityYAMLMerge
+[alias]
+    umerge = mergetool --tool=unity
