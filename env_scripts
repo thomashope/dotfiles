@@ -1,7 +1,9 @@
 # Things to be run on all invocations of the shell
 
-PATH=$PATH:~/scripts
-PATH=$PATH:/Applications/love.app/Contents/MacOS/love
+PATH="$PATH:~/scripts"
+PATH="$PATH:/Applications/love.app/Contents/MacOS/love"
+PATH="$PATH:/Applications/Sublime Text.app/Contents/SharedSupport/bin"
+PATH="$PATH:/Applications/Sublime Merge.app/Contents/SharedSupport/bin/"
 PATH="$PATH:$HOME/Library/Application Support/itch/apps/butler"
 
 export PATH
