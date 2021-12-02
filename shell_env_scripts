@@ -7,3 +7,6 @@ PATH="$PATH:/Applications/Sublime Merge.app/Contents/SharedSupport/bin/"
 PATH="$PATH:$HOME/Library/Application Support/itch/apps/butler"
 
 export PATH
+
+# enable homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
