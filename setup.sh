@@ -7,3 +7,4 @@ link_file zshenv
 link_file vimrc
 link_file gitconfig
 link_file gitconfig.local
+link_file lldbinit

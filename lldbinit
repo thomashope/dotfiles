@@ -1,5 +1,6 @@
-# Using scripts from https://bitbucket.org/lukeworth/lldb-qt-formatters/src/default/
-# cloned the repo into ~/.lldb/ folder
+# Using scripts from `https://github.com/SteveSchilz/lldb-qt-formatters` copied into lldb folder
+#
+#command script import ~/.lldb/lldb-qt-formatters/QtFormatters.py
+#command source ~/.lldb/lldb-qt-formatters/QtFormatters.lldb
 
-command script import ~/.lldb/lldb-qt-formatters/QtFormatters.py
-command source ~/.lldb/lldb-qt-formatters/QtFormatters.lldb
+command source ~/.dotfiles/lldb/glm.lldb
