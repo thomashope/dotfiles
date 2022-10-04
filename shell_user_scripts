@@ -4,6 +4,10 @@ alias ll="ls -lGp"
 alias la="ls -laGp"
 alias path='tr ":" "\n" <<< "$PATH"' # use single quotes to defer $PATH var expansion
 
+# Requires `brew install tree`
+alias lt="tree -C -L 3"
+alias ltt="tree -C"
+
 # Bash prompt
 #PS1="\[\e[0;32m\]\W \u \$ \[\e[m\]"
 #export PS1
