@@ -1,17 +1,75 @@
+#
 # Things to be run for intercative shells
+#
+# This script is designed to work in Git Bash for Windows and zsh on mac
+#
+# Dependencies:
+# - fzf
 
 alias ll="ls -lGp"
 alias la="ls -laGp"
 alias path='tr ":" "\n" <<< "$PATH"' # use single quotes to defer $PATH var expansion
 
+# TODO: make equivilent for mac
+# Place at the end of a long running command to play a sound on completion
+#   sleep 5 && chime
+function chime() {
+    (powershell -c "(New-Object Media.SoundPlayer C:/Windows/Media/chimes.wav).PlaySync();" &)
+}
+
+#
+# git shortcuts
+#
+
+# git switch branch
+alias gsb="git branch -a | grep -v \"^\*\" | fzf --height 20% --reverse --info=inline | sed 's/^\s*remotes\/origin\///' | xargs git switch"
+
+# git create branch
+alias gcb="git checkout -b"
+
+# git status
+alias gs="git status"
+
+# git fetch
+alias gf="git fetch"
+
+# git fetch and fast forward
+alias gff="git fetch && git pull --ff-only"
+
+# git update submodules
+alias gsu="git submodule update"
+
+export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+
+# Type ** then press tab to complete using fzf
+export FZF_COMPLETION_TRIGGER='**'
+
+# git diff
+# Allow staging and unstaging with shortcuts
+function gd() {
+    function list_files() {
+        git diff "${@:2}" 2>/dev/null |
+        while read -r line || [[ -n $line ]]; do
+            if [ -n "$line" ]; then
+                echo -e "\033[0;$1m$line\033[0m"
+            fi
+        done
+    }
+    local UNSTAGED_FILES=$(list_files 31 --name-only)
+    local STAGED_FILES=$(list_files 32 --name-only --staged)
+    local PREVIEW_COMMAND="git diff --exit-code --quiet {-1} && git diff --staged --color {-1} || git diff --color {-1}"
+	echo -e "$STAGED_FILES\n$UNSTAGED_FILES" | fzf --bind 'ctrl-p:change-preview-window(90%|)' --ansi --keep-right --preview "$PREVIEW_COMMAND"
+}
+
+# source fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 # Requires `brew install tree`
 alias lt="tree -C -L 3"
 alias ltt="tree -C"
 
-# Bash prompt
-#PS1="\[\e[0;32m\]\W \u \$ \[\e[m\]"
-#export PS1
-
-# Zsh prompt
-prompt='%F{green}%2~ %#%f '
-export prompt
+if [[ "$SHELL" == *zsh ]]; then
+    # Zsh prompt
+    prompt='%F{green}%2~ %#%f '
+    export prompt
+fi
