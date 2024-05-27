@@ -27,6 +27,9 @@ alias gsb="git branch -a | grep -v \"^\*\" | fzf --height 20% --reverse --info=i
 # git create branch
 alias gcb="git checkout -b"
 
+# git branch, very verbose. list branches and info
+alias gb="git branch -vv"
+
 # git status
 alias gs="git status"
 
