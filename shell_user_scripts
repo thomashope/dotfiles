@@ -48,7 +48,7 @@ export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 export FZF_COMPLETION_TRIGGER='**'
 
 # git diff
-# Allow staging and unstaging with shortcuts
+# TODO: Allow staging and unstaging with shortcuts
 function gd() {
     function list_files() {
         git diff "${@:2}" 2>/dev/null |
@@ -58,10 +58,19 @@ function gd() {
             fi
         done
     }
+    
     local UNSTAGED_FILES=$(list_files 31 --name-only)
     local STAGED_FILES=$(list_files 32 --name-only --staged)
+    
+    # Join the two file lists with a newline, if the first one is not empty
+    if [ -n "$STAGED_FILES" ]; then
+        local COMBINED="$STAGED_FILES"$'\n'"$UNSTAGED_FILES"
+    else
+        local COMBINED="$UNSTAGED_FILES"
+    fi
+
     local PREVIEW_COMMAND="git diff --exit-code --quiet {-1} && git diff --staged --color {-1} || git diff --color {-1}"
-	echo -e "$STAGED_FILES\n$UNSTAGED_FILES" | fzf --bind 'ctrl-p:change-preview-window(90%|)' --ansi --keep-right --preview "$PREVIEW_COMMAND"
+	echo -e "$COMBINED" | fzf --bind 'ctrl-p:change-preview-window(90%|)' --ansi --keep-right --preview "$PREVIEW_COMMAND"
 }
 
 # source fzf
