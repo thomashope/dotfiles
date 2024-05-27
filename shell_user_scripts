@@ -61,12 +61,18 @@ function gd() {
     
     local UNSTAGED_FILES=$(list_files 31 --name-only)
     local STAGED_FILES=$(list_files 32 --name-only --staged)
-    
-    # Join the two file lists with a newline, if the first one is not empty
-    if [ -n "$STAGED_FILES" ]; then
-        local COMBINED="$STAGED_FILES"$'\n'"$UNSTAGED_FILES"
+    local COMBINED=""
+
+    # Join the file lists, or exit
+    if [[ -z $UNSTAGED_FILES ]] && [[ -z $STAGED_FILES ]]; then # -z is true when the string is empty
+        echo "No changes to show."
+        return
+    elif [[ -z $UNSTAGED_FILES ]]; then
+        COMBINED="$STAGED_FILES"
+    elif [[ -z $STAGED_FILES ]]; then
+        COMBINED="$UNSTAGED_FILES"
     else
-        local COMBINED="$UNSTAGED_FILES"
+        COMBINED="$STAGED_FILES"$'\n'"$UNSTAGED_FILES"
     fi
 
     local PREVIEW_COMMAND="git diff --exit-code --quiet {-1} && git diff --staged --color {-1} || git diff --color {-1}"
