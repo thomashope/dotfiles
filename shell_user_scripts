@@ -69,13 +69,15 @@ function gd() {
         fi
     }
 
-    # Needs to be available in fzf subshell
-    export -f _gd_preview_diff
-
     function _gd_list_all() {
         _gd_list_files 31 --name-only
         _gd_list_files 32 --name-only --staged
     }
+
+    # Needs to be available in fzf subshell
+    export -f _gd_preview_diff
+    export -f _gd_list_files
+    export -f _gd_list_all
 
     local ALL_FILES=$(_gd_list_all)
 
@@ -84,7 +86,13 @@ function gd() {
         return
     fi
 
-    echo "$ALL_FILES" | fzf --bind 'ctrl-p:change-preview-window(90%|)' --ansi --keep-right --preview '_gd_preview_diff {}'
+    echo "$ALL_FILES" | fzf \
+        --header 'C-s stage, C-u unstage, C-r refresh, C-p toggle preview' \
+        --bind 'ctrl-p:change-preview-window(90%|)' \
+        --bind 'ctrl-r:reload(_gd_list_all)' \
+        --bind 'ctrl-s:execute(git add {})+reload(_gd_list_all)' \
+        --bind 'ctrl-u:execute(git unstage {})+reload(_gd_list_all)' \
+        --ansi --keep-right --preview '_gd_preview_diff {}'
 }
 
 # source fzf
