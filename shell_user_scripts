@@ -79,6 +79,11 @@ function gd() {
 
     local ALL_FILES=$(_gd_list_all)
 
+    if [[ -z "$ALL_FILES" ]]; then
+        echo "No changed files."
+        return
+    fi
+
     echo "$ALL_FILES" | fzf --bind 'ctrl-p:change-preview-window(90%|)' --ansi --keep-right --preview '_gd_preview_diff {}'
 }
 
