@@ -48,7 +48,9 @@ export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 export FZF_COMPLETION_TRIGGER='**'
 
 # git diff
-# TODO: Allow staging and unstaging with shortcuts
+# TODO:
+# - show unstaged files in the list (different color?)
+# - when a file has both staged and unstaged changes, make the diff preview display the correct changes for the one you have selected
 function gd() {
     
     function _gd_list_files() {
