@@ -50,7 +50,8 @@ export FZF_COMPLETION_TRIGGER='**'
 # git diff
 # TODO: Allow staging and unstaging with shortcuts
 function gd() {
-    function list_files() {
+    
+    function _gd_list_files() {
         git diff "${@:2}" 2>/dev/null |
         while read -r line || [[ -n $line ]]; do
             if [ -n "$line" ]; then
@@ -58,25 +59,27 @@ function gd() {
             fi
         done
     }
-    
-    local UNSTAGED_FILES=$(list_files 31 --name-only)
-    local STAGED_FILES=$(list_files 32 --name-only --staged)
-    local COMBINED=""
 
-    # Join the file lists, or exit
-    if [[ -z $UNSTAGED_FILES ]] && [[ -z $STAGED_FILES ]]; then # -z is true when the string is empty
-        echo "No changes to show."
-        return
-    elif [[ -z $UNSTAGED_FILES ]]; then
-        COMBINED="$STAGED_FILES"
-    elif [[ -z $STAGED_FILES ]]; then
-        COMBINED="$UNSTAGED_FILES"
-    else
-        COMBINED="$STAGED_FILES"$'\n'"$UNSTAGED_FILES"
-    fi
+    function _gd_preview_diff() {
+        local file="$1"
+        if git diff --exit-code --quiet "$file"; then
+            git diff --staged --color "$file"
+        else
+            git diff --color "$file"
+        fi
+    }
 
-    local PREVIEW_COMMAND="git diff --exit-code --quiet {-1} && git diff --staged --color {-1} || git diff --color {-1}"
-	echo -e "$COMBINED" | fzf --bind 'ctrl-p:change-preview-window(90%|)' --ansi --keep-right --preview "$PREVIEW_COMMAND"
+    # Needs to be available in fzf subshell
+    export -f _gd_preview_diff
+
+    function _gd_list_all() {
+        _gd_list_files 31 --name-only
+        _gd_list_files 32 --name-only --staged
+    }
+
+    local ALL_FILES=$(_gd_list_all)
+
+    echo "$ALL_FILES" | fzf --bind 'ctrl-p:change-preview-window(90%|)' --ansi --keep-right --preview '_gd_preview_diff {}'
 }
 
 # source fzf
