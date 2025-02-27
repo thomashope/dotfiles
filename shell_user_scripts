@@ -52,12 +52,11 @@ export FZF_COMPLETION_TRIGGER='**'
 
 # git diff
 # TODO:
-# - show unstaged files in the list (different color?)
 # - when a file has both staged and unstaged changes, make the diff preview display the correct changes for the one you have selected
 function gd() {
     
     function _gd_list_files() {
-        git diff "${@:2}" 2>/dev/null |
+        git "${@:2}" 2>/dev/null |
         while read -r line || [[ -n $line ]]; do
             if [ -n "$line" ]; then
                 echo -e "\033[0;$1m$line\033[0m"
@@ -69,6 +68,8 @@ function gd() {
         local file="$1"
         if [[ ! -f "$file" ]]; then
             echo "File '$file' does not exist. Perhaps it was deleted?"
+        elif ! git ls-files --error-unmatch "$file" &>/dev/null; then
+            cat "$file"
         elif git diff --exit-code --quiet "$file"; then
             git diff --staged --color "$file"
         else
@@ -77,8 +78,9 @@ function gd() {
     }
 
     function _gd_list_all() {
-        _gd_list_files 31 --name-only
-        _gd_list_files 32 --name-only --staged
+        _gd_list_files 31 diff --name-only
+        _gd_list_files 32 diff --name-only --staged
+        _gd_list_files 39 ls-files --others --exclude-standard
     }
 
     # Needs to be available in fzf subshell
@@ -102,7 +104,8 @@ function gd() {
         --ansi --keep-right --preview '_gd_preview_diff {}'
 }
 
-# source fzf
+# Install fzf by following the git clone and install method at https://github.com/junegunn/fzf?tab=readme-ov-file#installation
+# Source fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Requires `brew install tree`
