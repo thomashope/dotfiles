@@ -9,7 +9,7 @@
 [alias]
     s = status
     ci = commit
-    unstage = 'restore --staged'
+    unstage = restore --staged
 
 #
 # Setup Unity Merge Tool
