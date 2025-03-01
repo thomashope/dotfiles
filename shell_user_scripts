@@ -50,7 +50,7 @@ export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 # Type ** then press tab to complete using fzf
 export FZF_COMPLETION_TRIGGER='**'
 
-source "gd.sh"
+source "$HOME/.dotfiles/gd.sh"
 
 # Install fzf by following the git clone and install method at https://github.com/junegunn/fzf?tab=readme-ov-file#installation
 # Source fzf
