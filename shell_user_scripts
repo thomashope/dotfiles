@@ -50,59 +50,7 @@ export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 # Type ** then press tab to complete using fzf
 export FZF_COMPLETION_TRIGGER='**'
 
-# git diff
-# TODO:
-# - when a file has both staged and unstaged changes, make the diff preview display the correct changes for the one you have selected
-function gd() {
-    
-    function _gd_list_files() {
-        git "${@:2}" 2>/dev/null |
-        while read -r line || [[ -n $line ]]; do
-            if [ -n "$line" ]; then
-                echo -e "\033[0;$1m$line\033[0m"
-            fi
-        done
-    }
-
-    function _gd_preview_diff() {
-        local file="$1"
-        if [[ ! -f "$file" ]]; then
-            echo "File '$file' does not exist. Perhaps it was deleted?"
-        elif ! git ls-files --error-unmatch "$file" &>/dev/null; then
-            cat "$file"
-        elif git diff --exit-code --quiet "$file"; then
-            git diff --staged --color "$file"
-        else
-            git diff --color "$file"
-        fi
-    }
-
-    function _gd_list_all() {
-        _gd_list_files 31 diff --name-only
-        _gd_list_files 32 diff --name-only --staged
-        _gd_list_files 39 ls-files --others --exclude-standard
-    }
-
-    # Needs to be available in fzf subshell
-    export -f _gd_preview_diff
-    export -f _gd_list_files
-    export -f _gd_list_all
-
-    local ALL_FILES=$(_gd_list_all)
-
-    if [[ -z "$ALL_FILES" ]]; then
-        echo "No changed files."
-        return
-    fi
-
-    echo "$ALL_FILES" | fzf \
-        --header 'C-s stage, C-u unstage, C-r refresh, C-p toggle preview' \
-        --bind 'ctrl-p:change-preview-window(90%|)' \
-        --bind 'ctrl-r:reload(_gd_list_all)' \
-        --bind 'ctrl-s:execute(git add {})+reload(_gd_list_all)' \
-        --bind 'ctrl-u:execute(git unstage {})+reload(_gd_list_all)' \
-        --ansi --keep-right --preview '_gd_preview_diff {}'
-}
+source "gd.sh"
 
 # Install fzf by following the git clone and install method at https://github.com/junegunn/fzf?tab=readme-ov-file#installation
 # Source fzf
