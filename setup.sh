@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 set -Eeuo pipefail
 
 # setup dotfiles
@@ -21,6 +21,6 @@ else
 fi
 
 link_file vimrc
-# link_file gitconfig
+link_file gitconfig
 # link_file gitconfig.local
 link_file lldbinit
