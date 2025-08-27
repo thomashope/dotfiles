@@ -22,7 +22,7 @@ function chime() {
 #
 
 # git switch branch
-alias gsb="git branch --list --all --color -v | cut --character=3- | fzf --ansi --height 20% --reverse --info=inline | sed 's/^remotes\/origin\///' | cut --fields 1 --delimiter ' ' | xargs --no-run-if-empty git switch"
+alias gsb="git branch --list --all --color -v | cut -f 2- -w | fzf --ansi --height 20% --reverse --info=inline | sed 's/^remotes\/origin\///' | cut -f 1 -w | xargs --no-run-if-empty git switch"
 
 # git create branch
 alias gcb="git checkout -b"
